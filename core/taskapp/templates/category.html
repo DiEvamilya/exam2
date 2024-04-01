@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="columns has-background-black-ter is-centered has-text-white-bis" style="min-height: 101vh;">
+   <div class="column is-half">
+       <h1 class="is-size-3 has-text-centered">Список дел</h1>
+       <form action="" method="post">
+           {% csrf_token %}
+           <div class="field has-text-centered">
+               <label for="description" class="label has-text-white-bis">Введите дело</label>
+               <div class="control">
+                    <input type="text" id="description" class="input" placeholder="Чем собираетесь заняться?"
+                        name="description" required>
+               </div>
+           </div>
+           <div class="columns">
+                <div class="column">
+                    <label for="category">Категории</label>
+                    <div class="control">
+                        <div class="select">
+                            <select id="category" class="select" name="category_select" required>
+                                <option class="disabled" value="">Выберите категорию дела</option>
+                                {% for category in categories %}
+                                <option class="" value="{{ category.name }}" name=" {{ category.name }}">
+                                {{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <label for="endDate">Выберите дату</label>
+                    <input type="date" id="endDate" class="input calendar" name= "date" required>
+                </div>
+           </div>
+           <div class="column">
+                <div class="field">
+                <button class="button is-primary" name="Add" type="submit">
+                <span class="icon is-small">
+                <i class="fa fa-plus"></i>
+                </span>
+                <span>Добавить задание</span>
+                </button>
+                <button class="button is-link" name="Delete" formovalidate="" type="submit">
+                <span class="icon is-small">
+                    <i class="fa fa-trash-o"></i>
+                </span>
+                <span>
+                    Удалить дело
+                </span>
+                </button>
+                </div>
+           </div>
+           <div class="list is-hoverable">
+               {% for task in tasks %}
+            <div class="list-item">
+                <label class="checkbox">
+                <input type="checkbox" class=" checkbox" name="checkedbox" value="(f tasks.id )}">
+                    <span class="complete-">{{ tasks.title }}</span>
+                </label>
+                <span class=" category- {{ tasks.category }) has-text-info">{{ tasks.category })</span>
+                <strong class="is-pulled-right">
+                    <i class="fa fa-calendar"></i>
+                    {{ tasks.created }} - {{ tasks.end_date }}
+                </strong>
+            </div>
+            {% endfor %}
+           </div>
+       </form>
+   </div>
+</div>
+
+{% endblock %}
